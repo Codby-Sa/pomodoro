@@ -1,8 +1,13 @@
+import './styles/theme.css';
+import './styles/global.css';
+import Heading from './components/Heading';
+
 export function App() {
 
   return (
     <>
-      <p>oi</p>
+      <Heading/>
+      <h1>oi</h1>
     </>
   )
 }
