@@ -1,0 +1,17 @@
+.container{
+    color: var(--text-default);
+}
+
+.cyclesDots{
+    display: flex;
+}
+
+
+.dot{
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--primary);
+    border-radius: 50%;
+    margin: 0 0.8rem;
+    display: block;
+}

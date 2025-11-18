@@ -1,0 +1,30 @@
+.input{
+    background: transparent;
+    border: none;
+    border: 0.2rem, solid transparent;
+    transition: all 0.1s  ease-in-out;
+    padding: 0.8rem;
+    font-size: 1.8rem;
+    color: --var(text-default);
+    outline: none;
+    border-bottom: 0.2rem solid var(--primary);
+    text-align: center;
+    margin-top: 1.8rem;
+}
+
+.input:focus{
+    border: 0.2rem, solid var(--primary);
+    border-radius: 0.8rem;
+}
+.input::placeholder{
+    color: var(--gray-500);
+    font-size: 1.4rem;
+}
+
+.input:disabled {
+    border-bottom: 0.2rem, solid var(--disabled);
+    color: var(--text-muted);
+}
+p {
+    text-align: center;
+}
