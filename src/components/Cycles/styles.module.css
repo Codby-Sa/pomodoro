@@ -1,9 +1,15 @@
 .container{
     color: var(--text-default);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
 }
 
-.cyclesDots{
+.cycleDots{
     display: flex;
+    gap: 0.8rem;
 }
 
 
@@ -12,6 +18,16 @@
     height: 2rem;
     background-color: var(--primary);
     border-radius: 50%;
-    margin: 0 0.8rem;
-    display: block;
 }
+
+.workTime{
+    background-color: var(--warning);
+}
+
+.shortBreakTime{
+    background-color: var(--primary);
+}
+
+.longBreakTime{
+    background-color: var(--info);
+} 
