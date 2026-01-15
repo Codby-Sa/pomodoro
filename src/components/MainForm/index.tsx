@@ -3,14 +3,55 @@ import Cycles  from "../Cycles";
 import DefaultButton  from "../DefaultButton";
 import { PlayCircleIcon } from "lucide-react";
 import { useRef } from 'react';
+import type { TaskModel } from "../../models/TaskModel";
+import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 
 export function MainForm() {
 
   const taskNameInput = useRef<HTMLInputElement>(null);
+  const {setState} = useTaskContext();
 
   function handleCreateNewTask (event: React.FormEvent<HTMLFormElement>) { 
     event.preventDefault();
-    console.log('Criando nova tarefa');
+
+    if (taskNameInput.current) {
+
+      const taskName = taskNameInput.current.value.trim();
+      console.log(taskName);
+
+      if (!taskName) {
+        alert('O nome da tarefa não pode ser vazio.');
+        return;
+      } 
+
+      const newTask : TaskModel = {
+        id: Date.now().toString(),
+        name: taskName,
+        startDate: Date.now(),
+        completeDate: null,
+        interruptDate: null,
+        duration: 1,
+        type: 'workTime',
+
+      }
+
+      const secondsRemaining = newTask.duration * 60; 
+
+
+      setState(prevState => {
+        return {
+        ...prevState,
+        activeTask: newTask,
+        currentCycle: 1,
+        secondsRemaining,
+        formattedSecondsRemaining:'00:00',
+        tasks: [...prevState.tasks, newTask],
+        config: {...prevState.config},
+        }
+      });
+
+      console.log('Criando nova tarefa');
+    }
 
   }
 
