@@ -1,7 +1,7 @@
 import DeafaultInput from "../DefaultInput";
 import Cycles  from "../Cycles";
 import DefaultButton  from "../DefaultButton";
-import { PlayCircleIcon } from "lucide-react";
+import { PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { useRef } from 'react';
 import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
@@ -66,7 +66,14 @@ export function MainForm() {
   return (   
       <form onSubmit={handleCreateNewTask} className="form" action="">       
           <div className='formRow'>
-           <DeafaultInput ref={taskNameInput} type='text' id='input' labelText='Título' placeholder='Digite Algo'/>
+           <DeafaultInput 
+           ref={taskNameInput} 
+           type='text' 
+           id='input' 
+           labelText='Título' 
+           placeholder='Digite Algo'
+           disabled={!!state.activeTask}
+          />
 
           </div>
 
@@ -74,13 +81,31 @@ export function MainForm() {
             <p>Próximo ciclo é {nextCycleType} de duração {state.config[nextCycleType]} minutos</p>
           </div>
 
+          {state.currentCycle > 0 &&(
           <div className='formRow'>
             <Cycles/>
           </div>
+          )}
 
-          <div className='formRow'>
-            <DefaultButton icon={<PlayCircleIcon/>}/>
-          </div>
+        <div className='formRow' >
+          {!state.activeTask ? (
+            <DefaultButton 
+              type='submit' 
+              aria-label="Iniciar nova tarefa" 
+              title="Iniciar nova tarefa"
+              icon={<PlayCircleIcon/>}
+            />
+          ) : (
+            <DefaultButton 
+              type='button' 
+              aria-label="Parar tarefa" 
+              title="Parar tarefa"
+              icon={<StopCircleIcon/>}
+              color='red'
+            />
+          )
+          }
+        </div>
       </form>
     );
 }
