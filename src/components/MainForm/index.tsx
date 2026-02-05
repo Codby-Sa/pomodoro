@@ -63,6 +63,17 @@ export function MainForm() {
 
   }
 
+  function hanmdleInterruptTask() {
+    setState(prevState => {
+      return {
+      ...prevState,
+      activeTask: null,
+      secondsRemaining: 0,
+      formattedSecondsRemaining: '00:00',
+      }
+    });
+  }
+
   return (   
       <form onSubmit={handleCreateNewTask} className="form" action="">       
           <div className='formRow'>
@@ -88,23 +99,26 @@ export function MainForm() {
           )}
 
         <div className='formRow' >
-          {!state.activeTask ? (
+          {!state.activeTask && (
             <DefaultButton 
               type='submit' 
               aria-label="Iniciar nova tarefa" 
               title="Iniciar nova tarefa"
               icon={<PlayCircleIcon/>}
+              key="botao_submit"
             />
-          ) : (
+          )}
+            {!!state.activeTask && (
             <DefaultButton 
               type='button' 
               aria-label="Parar tarefa" 
               title="Parar tarefa"
               icon={<StopCircleIcon/>}
               color='red'
+              onClick={hanmdleInterruptTask}
+              key="botao_interrupt"
             />
-          )
-          }
+          )}
         </div>
       </form>
     );
