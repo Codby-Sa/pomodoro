@@ -7,12 +7,12 @@ import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
-import { formatSecondsToMinutes } from "../../utils/formatSecondsToMinutes";
+import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 
 export function MainForm() {
 
   const taskNameInput = useRef<HTMLInputElement>(null);
-  const {state, setState} = useTaskContext();
+  const {state, dispatch} = useTaskContext();
 
   const nextCycle = getNextCycle(state.currentCycle);
   const nextCycleType = getNextCycleType(nextCycle);
@@ -43,20 +43,8 @@ export function MainForm() {
 
       }
 
-      const secondsRemaining = newTask.duration * 60; 
 
-
-      setState(prevState => {
-        return {
-        ...prevState,
-        activeTask: newTask,
-        currentCycle: nextCycle,
-        secondsRemaining,
-        formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
-        tasks: [...prevState.tasks, newTask],
-        config: {...prevState.config},
-        }
-      });
+      dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
 
       console.log('Criando nova tarefa');
     }
@@ -64,23 +52,10 @@ export function MainForm() {
   }
 
   function hanmdleInterruptTask() {
-    setState(prevState => {
-      return {
-      ...prevState,
-      activeTask: null,
-      secondsRemaining: 0,
-      formattedSecondsRemaining: '00:00',
-      tasks: prevState.tasks.map(task => {
-        if ( prevState.activeTask &&  prevState.activeTask.id === task.id) {
-          return {
-            ...task,
-            interruptDate: Date.now(),
-          }
-        }
-        return task;  
-      }),
-    };
-    });
+    
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK});
+
+    
   }
 
   return (   
