@@ -43,6 +43,9 @@ export function MainForm() {
       dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
 
       console.log("Criando nova tarefa");
+
+      
+
     }
   }
 
