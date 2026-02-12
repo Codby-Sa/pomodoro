@@ -9,6 +9,7 @@ import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import { Tips } from "../Tips";
+import { showMessage } from "../../adapter/showMessage";
 
 export function MainForm() {
   const taskNameInput = useRef<HTMLInputElement>(null);
@@ -20,13 +21,14 @@ export function MainForm() {
 
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    showMessage.dismiss();
 
     if (taskNameInput.current) {
       const taskName = taskNameInput.current.value.trim();
       console.log(taskName);
 
       if (!taskName) {
-        alert("O nome da tarefa não pode ser vazio.");
+        showMessage.warning("O nome da tarefa não pode ser vazio.");
         return;
       }
 
@@ -42,15 +44,14 @@ export function MainForm() {
 
       dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
 
-      console.log("Criando nova tarefa");
-
-      
-
+      showMessage.success("Tarefa criada com sucesso!");
     }
   }
 
   function hanmdleInterruptTask() {
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
+    showMessage.dismiss();
+    showMessage.error("Tarefa interrompida.");
   }
 
   return (
