@@ -46,7 +46,7 @@ export default function Menu() {
       </RouterLink>
       <RouterLink
         className={styles.menuLink}
-        href="/history"
+        href="/history/"
         area-label="History"
         title="History"
       >
@@ -54,7 +54,7 @@ export default function Menu() {
       </RouterLink>
       <RouterLink
         className={styles.menuLink}
-        href="/settings"
+        href="/settings/"
         area-label="Settings"
         title="Settings"
       >
